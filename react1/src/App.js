@@ -2,6 +2,101 @@ import React from "react"
 import { useState, useEffect } from "react"
 
 
+const App = () => {
+    const [person, setperson] = useState({firstName : "", lastName : "", email : "", age : ""})
+    const [people, setpeople] = useState([])
+    const [enter, setenter] = useState("")
+
+    const handleChange = (event) => {
+        const {name , value} = event.target
+        const newPerson = {...person, [name] : value}
+        setperson(newPerson)
+    }
+
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        if(person.firstName && person.lastName && person.email && person.age){
+        let newPeople = {...person, id : new Date().getTime()}
+        console.log(newPeople);
+        setpeople([newPeople])
+        setperson({firstName : "", lastName : "", email : "", age : ""})
+        }else{
+            setenter("Please enter detailes")
+            setTimeout(() => {
+                setenter("")
+            }, 2000)
+    }
+}
+
+    return (
+        <div>
+            <form action="">
+            <h1>{enter}</h1>
+                <div>
+                    <label>FirstName : </label>
+                    <input type="text" 
+                            name="firstName"
+                            value = {person.firstName}
+                            onChange = {handleChange}/>
+                </div><br />
+
+                <div>
+                    <label>LastName : </label>
+                    <input type="text" 
+                            name="lastName"
+                            value = {person.lastName}
+                            onChange = {handleChange}/>
+                </div><br />
+
+                <div>
+                    <label>Email : </label>
+                    <input type="text" 
+                            name="email"
+                            value = {person.email}
+                            onChange = {handleChange}/>
+                </div><br />
+
+                <div>
+                    <label>Age : </label>
+                    <input type="text" 
+                            name="age"
+                            value = {person.age}
+                            onChange = {handleChange}/>
+                </div>
+            <button onClick = {handleSubmit}>Submit</button>
+            </form><br />
+
+
+            {people.map((data) => {
+                const {firstName, lastName, email, age, id} = data
+                return <div key = {id}>
+                    <h1>{firstName} {lastName}</h1> 
+                    <p>{email}, {age}</p>
+                </div>
+            })}
+
+        </div>
+    )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //FORMS
 // const App = () => {
 //     const [person, setperson] = useState({
