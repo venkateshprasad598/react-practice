@@ -1,43 +1,79 @@
 import React, { createContext } from "react"
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
+import SeFetch from "./components/custom"
 
 
-const myContext = createContext()
 const App = () => {
-    const name = "Venkatesh Prasad"
-    const age = 23
-
-    return (
-        <myContext.Provider value = {{name, age}}>
-        <div>
-            <List1/>
-        </div>
-        </myContext.Provider>
-    )
-}
-
-const List1 = () => {
-    return(
-        <List2/>
-    )
-}
-
-const List2 = () => {
-    return(
-        <List3/>
-    )
-}
-
-const List3 = () => {
-    const newContext = useContext(myContext)
+    
+const {data} = SeFetch("https://api.github.com/users")
     return(
         <div>
-            <h1>My name is {newContext.name} and i am {newContext.age} years old</h1>
+            {data.map((data) => {
+                const {avatar_url, login} = data
+                return <div>
+                    <h1>{login}</h1>
+                    <img src={avatar_url} alt="" />
+                </div>
+            })}
         </div>
     )
 }
-
 export default App
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const myContext = createContext()
+// const App = () => {
+//     const name = "Venkatesh Prasad"
+//     const age = 23
+
+//     return (
+//         <myContext.Provider value = {{name, age}}>
+//         <div>
+//             <List1/>
+//         </div>
+//         </myContext.Provider>
+//     )
+// }
+
+// const List1 = () => {
+//     return(
+//         <List2/>
+//     )
+// }
+
+// const List2 = () => {
+//     return(
+//         <List3/>
+//     )
+// }
+
+// const List3 = () => {
+//     const newContext = useContext(myContext)
+//     return(
+//         <div>
+//             <h1>My name is {newContext.name} and i am {newContext.age} years old</h1>
+//         </div>
+//     )
+// }
+
+// export default App
 
 
 
