@@ -12,16 +12,29 @@ const reducer = (bio, action) => {
         }
     }
 
-    if(action.ok === true){
+    if (action.ok === true) {
+        return {
+            ...bio, istrue: !action.ok
+        }
+    }
+
+    if(action.empty === "NothingEntered"){
+        return {
+            ...bio, isentered : true
+        }
+    }
+
+    if(action.notok === false){
         return{
-            ...bio, istrue : !action.ok
+            ...bio, isentered : false
         }
     }
 }
 
 const initialState = {
     people: [],
-    istrue: true
+    istrue: true,
+    isentered : false
 }
 const App = () => {
     const [person, setperson] = useState({ name: "", email: "" })
@@ -37,14 +50,23 @@ const App = () => {
         if (person.name && person.email) {
             const people = { ...person, id: new Date().getTime }
             dispatch({ type: "TYPE", updated: people })
+        }else{
+            dispatch({empty : "NothingEntered"})
+
         }
     }
 
     useEffect(() => {
         setTimeout(() => {
 
-            dispatch({ok : true})
+            dispatch({ ok: true })
         }, 2000)
+    })
+
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch({notok : false})
+        },2000)
     })
 
 
@@ -61,9 +83,10 @@ const App = () => {
         <button onClick={handleClick}>Submit</button>
     </form>
 
+
     return (
         <div>
-
+            {bio.isentered && <h3>Please enter the all detailes</h3>}
             {bio.istrue ? <h1>Loading...</h1> : data}
 
 
