@@ -1,15 +1,14 @@
 import React, { createContext } from "react"
 import { useState, useContext, useEffect } from "react"
-import SeFetch from "./components/custom"
-
+import useFetch from "./components/custom"
 
 const App = () => {
-    
-const {data} = SeFetch("https://api.github.com/users")
-    return(
+    const {data} = useFetch("https://api.github.com/users")
+
+    return (
         <div>
             {data.map((data) => {
-                const {avatar_url, login} = data
+                const {login, avatar_url} = data
                 return <div>
                     <h1>{login}</h1>
                     <img src={avatar_url} alt="" />
@@ -17,6 +16,7 @@ const {data} = SeFetch("https://api.github.com/users")
             })}
         </div>
     )
+
 }
 export default App
 
