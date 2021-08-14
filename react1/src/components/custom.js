@@ -1,24 +1,21 @@
 import React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect} from "react"
 
-const useFetch = (url) =>{
-
-    const [data, setdata] = useState([])
+const useFetch  = (url) => {
+    const [people, setpeople] = useState([])
 
     const getFetch = async() => {
         const response = await fetch(url)
-        if(response.status >= 200 && response.status < 299){
-            const jsonResponse = await response.json()
-            setdata(jsonResponse)
-        }
+        const newResponse = await response.json()
+        setpeople(newResponse)
     }
 
     useEffect(() => {
         getFetch()
     }, [])
 
-    return {data}
-
+    return {people}
 }
- export default useFetch
 
+
+export default useFetch

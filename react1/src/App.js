@@ -1,22 +1,13 @@
-import React, { createContext } from "react"
-import { useState, useContext, useEffect } from "react"
-import useFetch from "./components/custom"
+import React from "react"
+import RouterSetUp from "./components/Index"
+
 
 const App = () => {
-    const {data} = useFetch("https://api.github.com/users")
-
     return (
         <div>
-            {data.map((data) => {
-                const {login, avatar_url} = data
-                return <div>
-                    <h1>{login}</h1>
-                    <img src={avatar_url} alt="" />
-                </div>
-            })}
+            <RouterSetUp/>
         </div>
     )
-
 }
 export default App
 
