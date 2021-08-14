@@ -1,58 +1,54 @@
-import React from "react"
-import { useState, useEffect } from "react"
+import React, { createContext } from "react"
+import { useState, useContext } from "react"
 
+
+const myContext = createContext()
 
 const App = () => {
-    const [person, setperson] = useState({ name: "" })
-    const [people, setpeople] = useState([])
 
-    const handleChange = (event) => {
-        const { name, value } = event.target
-        setperson({ ...person, [name]: value })
+    const [people, setpeople] = useState([
+        {name : "Venkatesh", id : 1},
+        {name : "Prasad", id : 2},
+        {name : "Venkatesh Prasad", id : 3},
+    ])
+
+    const handleChange = (num) => {
+        let newPeople = people.filter((data) => data.id !== num)
+        console.log(newPeople);
+        setpeople(newPeople)
     }
-
-    const handleClick = () => {
-        // event.preventDefault()
-        if(person.name && person.email){
-            setpeople([{...person, id : new Date().getTime()}])
-        }
-
-    }
-
     return (
         <div>
-            <form>
-                <div>
-                    <input type="text"
-                        name="name"
-                        value={person.name}
-                        onChange={handleChange}
-                        placeholder="Your Name" />
-                </div><br />
-
-                <div>
-                <input type="email"
-                    name="email"
-                    value={person.email}
-                    onChange={handleChange}
-                    placeholder="E-mail" />
-                </div><br />
-
-            </form>
-            <button onClick = {handleClick}>Submit</button>
-
+            <myContext.Provider value = {{handleChange}}>
             {people.map((data) => {
-                return <div key = {data.id}>
-                        <h1>{data.name}</h1>
-                        <p>{data.email}</p>
-                </div>
+                return <List1 name = {data.name} id = {data.id} key = {data}/>
             })}
-            
-        </div >
+            </myContext.Provider>
+        </div>
     )
 }
 
 
+const List1  = ({name, id}) => {
+    return (
+
+        <List2 name = {name} id = {id}/>
+     
+    )
+}
+
+const List2 = ({name, id}) => {
+    const newContext = useContext(myContext)
+
+    return(
+        <div>
+            <h1>Name : {name}</h1>
+            <button onClick = { () => newContext.handleChange(id)}>Remove</button>
+        </div>
+    )
+}
+
+export default App
 
 
 
@@ -67,6 +63,73 @@ const App = () => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const App = () => {
+//     const [person, setperson] = useState({ name: "" })
+//     const [people, setpeople] = useState([])
+
+//     const handleChange = (event) => {
+//         const { name, value } = event.target
+//         setperson({ ...person, [name]: value })
+//     }
+
+//     const handleClick = () => {
+//         // event.preventDefault()
+//         if(person.name && person.email){
+//             setpeople([{...person, id : new Date().getTime()}])
+//         }
+
+//     }
+
+    
+//     return (
+//         <div>
+//             <form>
+//                 <div>
+//                     <input type="text"
+//                         name="name"
+//                         value={person.name}
+//                         onChange={handleChange}
+//                         placeholder="Your Name" />
+//                 </div><br />
+
+//                 <div>
+//                 <input type="email"
+//                     name="email"
+//                     value={person.email}
+//                     onChange={handleChange}
+//                     placeholder="E-mail" />
+//                 </div><br />
+
+//             </form>
+//             <button onClick = {handleClick}>Submit</button>
+
+//             {people.map((data) => {
+//                 return <div key = {data.id}>
+//                         <h1>{data.name}</h1>
+//                         <p>{data.email}</p>
+//                 </div>
+//             })}
+            
+//         </div >
+//     )
+// }
 
 
 
@@ -160,19 +223,6 @@ const App = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 //FORMS
 // const App = () => {
 //     const [person, setperson] = useState({
@@ -231,30 +281,6 @@ const App = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //LOG IN LOG OUT BUTTON
 // const App = () => {
 //     const[islog, setislog] = useState(false)
@@ -279,35 +305,6 @@ const App = () => {
 //         </div>
 //     )
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -376,37 +373,6 @@ const App = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //NUMBERS
 // const App = () => {
 //     const [number, setnumber] = useState(0)
@@ -424,26 +390,6 @@ const App = () => {
 //         </div>
 //     )
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -475,34 +421,7 @@ const App = () => {
 //     )
 // }
 
-export default App
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// export default App
 
 
 
