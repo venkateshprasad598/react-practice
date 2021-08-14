@@ -1,16 +1,83 @@
 import React from "react"
 import RouterSetUp from "./components/Index"
+import { useReducer } from "react"
+import { useState } from "react"
+import { useEffect } from "react"
 
+const reducer = (bio, action) => {
+    if (action.type === "TYPE") {
+        const newPerson = [...bio.people, action.updated]
+        return {
+            ...bio, people: newPerson
+        }
+    }
 
+    if(action.ok === true){
+        return{
+            ...bio, istrue : !action.ok
+        }
+    }
+}
+
+const initialState = {
+    people: [],
+    istrue: true
+}
 const App = () => {
+    const [person, setperson] = useState({ name: "", email: "" })
+    const [bio, dispatch] = useReducer(reducer, initialState)
+
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setperson({ ...person, [name]: value })
+    }
+
+    const handleClick = (e) => {
+        e.preventDefault()
+        if (person.name && person.email) {
+            const people = { ...person, id: new Date().getTime }
+            dispatch({ type: "TYPE", updated: people })
+        }
+    }
+
+    useEffect(() => {
+        setTimeout(() => {
+
+            dispatch({ok : true})
+        }, 2000)
+    })
+
+
+    const data = <form>
+        <div>
+            <label >Name : </label>
+            <input type="text" name="name" value={person.name} onChange={handleChange} />
+        </div>
+
+        <div>
+            <label >Email : </label>
+            <input type="email" name="email" value={person.email} onChange={handleChange} />
+        </div> <br />
+        <button onClick={handleClick}>Submit</button>
+    </form>
+
     return (
         <div>
-            <RouterSetUp/>
+
+            {bio.istrue ? <h1>Loading...</h1> : data}
+
+
+            {bio.people.map((data) => {
+                return <div key={data.id}>
+                    <h1>{data.name}</h1>
+                    <h1>{data.email}</h1>
+                </div>
+            })}
         </div>
     )
 }
-export default App
 
+export default App
 
 
 
@@ -123,7 +190,7 @@ export default App
 //     return (
 
 //         <List2 name = {name} id = {id}/>
-     
+
 //     )
 // }
 
@@ -187,7 +254,7 @@ export default App
 
 //     }
 
-    
+
 //     return (
 //         <div>
 //             <form>
@@ -216,7 +283,7 @@ export default App
 //                         <p>{data.email}</p>
 //                 </div>
 //             })}
-            
+
 //         </div >
 //     )
 // }
