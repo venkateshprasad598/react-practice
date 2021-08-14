@@ -3,52 +3,115 @@ import { useState, useContext } from "react"
 
 
 const myContext = createContext()
-
 const App = () => {
+    const name = "Venkatesh Prasad"
+    const age = 23
 
-    const [people, setpeople] = useState([
-        {name : "Venkatesh", id : 1},
-        {name : "Prasad", id : 2},
-        {name : "Venkatesh Prasad", id : 3},
-    ])
-
-    const handleChange = (num) => {
-        let newPeople = people.filter((data) => data.id !== num)
-        console.log(newPeople);
-        setpeople(newPeople)
-    }
     return (
+        <myContext.Provider value = {{name, age}}>
         <div>
-            <myContext.Provider value = {{handleChange}}>
-            {people.map((data) => {
-                return <List1 name = {data.name} id = {data.id} key = {data}/>
-            })}
-            </myContext.Provider>
+            <List1/>
         </div>
+        </myContext.Provider>
     )
 }
 
-
-const List1  = ({name, id}) => {
-    return (
-
-        <List2 name = {name} id = {id}/>
-     
+const List1 = () => {
+    return(
+        <List2/>
     )
 }
 
-const List2 = ({name, id}) => {
+const List2 = () => {
+    return(
+        <List3/>
+    )
+}
+
+const List3 = () => {
     const newContext = useContext(myContext)
-
     return(
         <div>
-            <h1>Name : {name}</h1>
-            <button onClick = { () => newContext.handleChange(id)}>Remove</button>
+            <h1>My name is {newContext.name} and i am {newContext.age} years old</h1>
         </div>
     )
 }
 
 export default App
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//CONTEXT API
+// const myContext = createContext()
+
+// const App = () => {
+
+//     const [people, setpeople] = useState([
+//         {name : "Venkatesh", id : 1},
+//         {name : "Prasad", id : 2},
+//         {name : "Venkatesh Prasad", id : 3},
+//     ])
+
+//     const handleChange = (num) => {
+//         let newPeople = people.filter((data) => data.id !== num)
+//         console.log(newPeople);
+//         setpeople(newPeople)
+//     }
+//     return (
+//         <div>
+//             <myContext.Provider value = {{handleChange}}>
+//             {people.map((data) => {
+//                 return <List1 name = {data.name} id = {data.id} key = {data}/>
+//             })}
+//             </myContext.Provider>
+//         </div>
+//     )
+// }
+
+
+// const List1  = ({name, id}) => {
+//     return (
+
+//         <List2 name = {name} id = {id}/>
+     
+//     )
+// }
+
+// const List2 = ({name, id}) => {
+//     const newContext = useContext(myContext)
+
+//     return(
+//         <div>
+//             <h1>Name : {name}</h1>
+//             <button onClick = { () => newContext.handleChange(id)}>Remove</button>
+//         </div>
+//     )
+// }
+
+// export default App
 
 
 
